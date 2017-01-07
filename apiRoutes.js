@@ -54,7 +54,7 @@ module.exports = function(app) {
   });
 
   // Home categories - Good
-  app.get('/api/categories', function(req, res, next) {
+  app.get('/api/categories', requireAuth, function(req, res, next) {
     Category.find({}, function(err, categories) {
       if (categories) {
         res.json(categories);
@@ -65,7 +65,7 @@ module.exports = function(app) {
   });
 
   // Item's category in [array] - Good
-  app.get('/api/items/:category', function(req, res, next) {
+  app.get('/api/items/:category', requireAuth, function(req, res, next) {
 
     async.waterfall([
       function(callback) {
@@ -109,7 +109,7 @@ module.exports = function(app) {
       } else if (items.length === 0){
         res.json({ message: "Item that you are looking for doesn't exist"});
       }
-      
+
     });
   });
 
