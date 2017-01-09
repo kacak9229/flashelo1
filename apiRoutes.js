@@ -113,6 +113,29 @@ module.exports = function(app) {
     });
   });
 
+  app.post('/api/create-item/:category', function(req, res, next) {
+    var item = new Item();
+
+    item.category = req.params.category;
+    item.name = req.body.name
+    item.price = faker.commerce.price();
+    item.image = faker.image.cats();
+    item.save(function(err, item) {
+      res.send(item);
+    });
+  });
+
+  app.get('/api/getItem/', function(req, res, next) {
+    Item.findOne({ name: "Mouse Hunter 2"}, function(err, foundItem) {
+      foundItem.calculateTime();
+
+      res.json(foundItem);
+
+    });
+
+
+  });
+
   // Will remove soon, to store data in mongodb
   // app.get('/api/:category', function(req, res, next) {
   //
@@ -128,12 +151,12 @@ module.exports = function(app) {
   //   res.send("Successfully save");
   // });
   //
-  // app.get('/api/create-category/:name', function(req, res, next) {
-  //   var category = new Category();
-  //   category.name = req.params.name;
-  //   category.save(function(err) {
-  //     res.send("Successfully created");
-  //   });
-  // });
+  app.get('/api/create-category/:name', function(req, res, next) {
+    var category = new Category();
+    category.name = req.params.name;
+    category.save(function(err) {
+      res.send("Successfully created");
+    });
+  });
 
 }

@@ -7,7 +7,7 @@ const config = require('./config');
 const app = express();
 const apiRouter = require('./apiRoutes');
 
-mongoose.connect('mongodb://root:abc123@ds157288.mlab.com:57288/flashelo', function(err) {
+mongoose.connect(config.database, function(err) {
   if (err) {
     console.log(err);
   } else {
